@@ -3,10 +3,10 @@ import os
 from pathlib import Path
 import sys;
 import obd;
-from PySide6 import QtWidgets
-from PySide6.QtWidgets import QApplication, QWidget
-from PySide6.QtCore import QFile
-from PySide6.QtUiTools import QUiLoader
+from PySide2 import QtWidgets
+from PySide2.QtWidgets import QApplication, QWidget
+from PySide2.QtCore import QFile
+from PySide2.QtUiTools import QUiLoader
 
 connection = obd.Async('/dev/cu.usbserial-113011152750');
 
