@@ -22,11 +22,18 @@ class Widget(QWidget):
     def __init__(self):
         super(Widget, self).__init__()
         self.load_ui()
+        
 
-    def new_rpm(r, self):
-        self.findChild(QtWidgets.QLCDNumber, 'lcdNumber').display(r.value.to('psi'))
+    def changeNum (self):
+         
+        print('HELLO WORLD!!!')
 
-   
+        def new_rpm(r):
+            self.findChild(QtWidgets.QLCDNumber, 'lcdNumber').display(r.value.to('psi'))
+
+        connection = obd.Async('/dev/cu.usbserial-113011152750');
+        connection.watch(obd.commands.INTAKE_PRESSURE, callback=new_rpm, force=True)
+        connection.start()
 
     def load_ui(self):
         loader = QUiLoader()
@@ -35,17 +42,11 @@ class Widget(QWidget):
         ui_file.open(QFile.ReadOnly)
         loader.load(ui_file, self)
         ui_file.close()
-    
-    connection = obd.Async('/dev/cu.usbserial-113011152750');
-    connection.watch(obd.commands.INTAKE_PRESSURE, callback=new_rpm, force=True)
-    connection.start()
-    time.sleep(60)
-    connection.stop()
+
 
 if __name__ == "__main__":
     app = QApplication([])
     widget = Widget()
-    widget.show() 
-    obd.logger.setLevel(obd.logging.DEBUG)
-   
+    widget.changeNum()
+    widget.show()
     sys.exit(app.exec_())
