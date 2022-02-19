@@ -29,7 +29,13 @@ class Widget(QWidget):
         print('HELLO WORLD!!!')
 
         def new_rpm(r):
-            self.findChild(QtWidgets.QLCDNumber, 'lcdNumber').display(r.value.to('psi'))
+            print(r.value)
+
+            new_num = [int(s) for s in str(r).split() if s.isdigit()]
+            print(round(new_num[0] * 0.14503774));
+            display_num = round(new_num[0] * 0.14503774)
+
+            self.findChild(QtWidgets.QLCDNumber, 'lcdNumber').display(display_num)
 
         connection = obd.Async('/dev/cu.usbserial-113011152750');
         connection.watch(obd.commands.INTAKE_PRESSURE, callback=new_rpm, force=True)
